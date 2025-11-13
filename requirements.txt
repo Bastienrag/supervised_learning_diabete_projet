@@ -1,0 +1,28 @@
+# Core scientific libraries
+pandas==2.2.2
+numpy==1.26.4
+
+# Machine Learning
+scikit-learn==1.5.1
+imbalanced-learn==0.12.3  # utile si tu veux gérer le déséquilibre avec SMOTE
+
+# Visualization
+matplotlib==3.9.1
+seaborn==0.13.2
+
+# Utilities
+joblib==1.4.2  # pour sauvegarder/charger les modèles
+
+# Optionnel: pour les notebooks Jupyter
+notebook==6.5.4
+jupyterlab==4.0.6
+ipykernel==6.25.2
+
+# Optionnel: pour le déploiement de modèles
+flask==2.3.5
+fastapi==0.100.0
+uvicorn==0.23.2
+pydantic==2.8.0
+gunicorn==20.1.0
+
+
