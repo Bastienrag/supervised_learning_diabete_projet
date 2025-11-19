@@ -4,11 +4,9 @@ numpy==1.26.4
 
 # Machine Learning
 scikit-learn==1.5.1
-imbalanced-learn==0.12.3  # utile si tu veux gérer le déséquilibre avec SMOTE
 
 # Visualization
 matplotlib==3.9.1
-seaborn==0.13.2
 
 # Utilities
 joblib==1.4.2  # pour sauvegarder/charger les modèles
@@ -24,5 +22,6 @@ fastapi==0.100.0
 uvicorn==0.23.2
 pydantic==2.8.0
 gunicorn==20.1.0
+
 
 
