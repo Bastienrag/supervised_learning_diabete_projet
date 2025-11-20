@@ -107,13 +107,13 @@ def train_model(df: pd.DataFrame):
 
 
 # ──────────────────────────────────────────────────────────────
-# Sauvegarde du modèle
+# Sauvegarde du modèle ##### On ne va pas sauvegarder le modèle pour l'instant, car fichier de sortie trop lourd, difficultés à push sur notre repo github
 # ──────────────────────────────────────────────────────────────
 
-def save_model(model, path: str):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    joblib.dump(model, path)
-    print(f"\n Modèle sauvegardé sous : {path}")
+#def save_model(model, path: str):
+    #os.makedirs(os.path.dirname(path), exist_ok=True)
+    #joblib.dump(model, path)
+    #print(f"\n Modèle sauvegardé sous : {path}")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -127,8 +127,8 @@ def main():
     print(" Entraînement du modèle Random Forest optimisé...")
     model = train_model(df)
 
-    print(" Sauvegarde du modèle...")
-    save_model(model, MODEL_PATH)
+    #print(" Sauvegarde du modèle...")
+    #save_model(model, MODEL_PATH)
 
     print("\n Pipeline terminée avec succès !")
 
