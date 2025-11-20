@@ -43,7 +43,7 @@ Extensive cleaning and transformation were required.
 
 ---
 
-## 🔧 3. Data Cleaning & Feature Engineering
+##  3. Data Cleaning & Feature Engineering
 
 ### ✔ Cleaning
 - Removal of columns with extreme missingness:  
@@ -53,7 +53,7 @@ Extensive cleaning and transformation were required.
 - Removal of medication features with near-constant distribution  
 - Conversion of all remaining features to numeric types
 
-### ✔ Feature Engineering
+###  Feature Engineering
 - **ICD-9 diagnosis grouping** (`diag_1`, `diag_2`, `diag_3`) → medically meaningful categories  
 - `diag_1` encoded via One-Hot Encoding  
 - `diag_2`, `diag_3` converted to binary comorbidity flags  
@@ -64,7 +64,7 @@ Extensive cleaning and transformation were required.
 readmitted_flag = 1 if readmitted == "<30"
 readmitted_flag = 0 otherwise
 
-### ✔ Final dataset
+###  Final dataset
 - **269,346 rows**  
 - **≈ 60 fully numerical features**  
 - **0 missing values**  
@@ -72,14 +72,14 @@ readmitted_flag = 0 otherwise
 
 ---
 
-## ⚙️ 4. Reproducibility Instructions
+##  4. Reproducibility Instructions
 
-### 🐍 Python version
+###  Python version
 Use **Python 3.9+**
 
 ---
 
-### 📂 4.1 Dataset placement
+###  4.1 Dataset placement
 
 Place the cleaned dataset here:
 project/
@@ -88,12 +88,12 @@ project/
 
 ---
 
-### 📦 4.2 Install dependencies
+###  4.2 Install dependencies
 pip install -r requirements.txt
 
 ---
 
-### 🚀 4.3 Run the full training pipeline
+###  4.3 Run the full training pipeline
 python main.py
 
 This script will:
@@ -106,7 +106,7 @@ This script will:
 
 ---
 
-## 🧪 5. Baseline Model – Logistic Regression
+##  5. Baseline Model – Logistic Regression
 
 The baseline provides a simple reference point to measure improvements.
 
@@ -125,7 +125,7 @@ Baseline results:
 
 ---
 
-## 🔬 6. Experiment Tracking
+##  6. Experiment Tracking
 
 A structured iterative approach was followed to improve model performance.
 
@@ -137,7 +137,7 @@ A structured iterative approach was followed to improve model performance.
 | 4 | Full feature engineering (ICD9 grouping, encoding, cleaning) | Random Forest | ~0.97 | Major gain due to high-quality data prep |
 | 5 | Hyperparameter tuning (GridSearchCV, CV=5) | **Random Forest (final)** | **0.9903** | Best model |
 
-### 🎯 Final Model Used  
+###  Final Model Used  
 **Optimized Random Forest**
 
 Hyperparameters:
@@ -149,7 +149,7 @@ class_weight = "balanced"
 
 ---
 
-## 🏆 7. Final Model Performance (Test Set)
+##  7. Final Model Performance (Test Set)
 
 | Metric | Score |
 |--------|--------|
@@ -169,7 +169,7 @@ class_weight = "balanced"
 
 ---
 
-## 📁 8. Project Structure
+##  8. Project Structure
 
 project/
 ├── README.md
