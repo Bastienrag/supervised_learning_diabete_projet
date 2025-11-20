@@ -3,86 +3,85 @@
 
 ---
 
-## 📌 1. Business Challenge
+##  1. Business Challenge
 
-Hospital readmissions within 30 days are costly, harmful for patients, and a key indicator of hospital performance.  
-Diabetic patients are particularly vulnerable due to complex comorbidities and chronic complications.
+Hospital readmissions within 30 days are costly and often preventable.  
+Diabetic patients represent a high-risk group due to complex comorbidities and difficulties in glycemic control.
 
 **Objective:**  
-Build a machine learning model to **predict whether a diabetic patient will be readmitted within 30 days** after discharge.
+Build a Machine Learning model capable of predicting whether a diabetic patient will be **readmitted within 30 days** after hospital discharge.
 
-**Why it matters:**  
-- identify high-risk patients early,  
-- allow targeted follow-up interventions,  
-- reduce avoidable hospital costs,  
-- improve patient care and outcomes.
+**Why this matters:**  
+- Helps identify high-risk patients early  
+- Enables targeted follow-up interventions  
+- Reduces avoidable readmission costs  
+- Improves patient care and clinical outcomes
 
-This repository provides a complete, reproducible pipeline for this predictive task.
+This repository provides a complete, reproducible ML pipeline addressing this challenge.
 
 ---
 
-## 📦 2. Dataset Description
+##  2. Dataset Description
 
-Dataset used: **Diabetes 130-US hospitals**  
-Source: UCI Machine Learning Repository  
+Dataset: **Diabetes 130-US Hospitals**  
+Source: UCI Machine Learning Repository
 
 **Initial characteristics:**
-- >100,000 hospital encounters  
-- >50 features (demographics, ICD-9 diagnoses, medications, hospital stay metrics, A1C…)  
-- Original target variable: `readmitted` (`NO`, `<30`, `>30`)
+- 100,000+ hospital encounters  
+- 50+ features  
+- Demographics, ICD-9 diagnoses, medications, A1C results, prior hospital utilizations  
+- Target variable (`readmitted`): `NO`, `<30`, `>30`
 
-The raw dataset contains many inconsistencies:
-- missing values encoded as `"?"`
-- high-cardinality diagnosis codes (ICD-9)
-- erratic medication columns
-- several useless administrative variables
-- mixed data types
+The raw dataset contains:  
+- Missing values encoded as `"?"`  
+- High-cardinality ICD-9 codes  
+- Inconsistent or useless administrative features  
+- Mixed categorical/numerical variables  
+- Medication columns with very low variance
 
-A substantial cleaning and transformation effort was required.
+Extensive cleaning and transformation were required.
 
 ---
 
 ## 🔧 3. Data Cleaning & Feature Engineering
 
 ### ✔ Cleaning
-- Removal of columns with excessive missingness:  
+- Removal of columns with extreme missingness:  
   `weight`, `payer_code`, `medical_specialty`
-- Removal of rows where `race = "?"` (~2% of data)
-- Replacement or removal of all `"?"` values
-- Removal of medication columns with quasi-constant distribution
-- Conversion of all fields into numeric types
-- Removal of high-cardinality, low-value columns
+- Removal of ~2% of rows with `race = "?"`  
+- Cleanup of all `"?"` entries across the dataset  
+- Removal of medication features with near-constant distribution  
+- Conversion of all remaining features to numeric types
 
 ### ✔ Feature Engineering
-- **ICD-9 regrouping** for `diag_1`, `diag_2`, `diag_3`  
-  → mapped to meaningful medical categories  
-  (e.g., Circulatory System, Diabetes, Infectious Diseases…)
-- `diag_1`: One-Hot Encoding  
-- `diag_2`, `diag_3`: binary comorbidity indicators  
-- Encoding of medication variables (insulin, metformin, etc.)
-- Transformation of A1C results into ordinal feature (`A1Cresult_cat`)
-- Cleaning & encoding of `gender` and `race`
+- **ICD-9 diagnosis grouping** (`diag_1`, `diag_2`, `diag_3`) → medically meaningful categories  
+- `diag_1` encoded via One-Hot Encoding  
+- `diag_2`, `diag_3` converted to binary comorbidity flags  
+- Clinical encoding of medications (`insulin`, `metformin`, etc.)  
+- Transformation of A1C results into an ordinal feature (`A1Cresult_cat`)  
+- Encoding of demographic features (`gender`, `race`)  
 - Creation of binary target:
-    readmitted_flag = 1 if readmitted == "<30"
-    readmitted_flag = 0 otherwise
+readmitted_flag = 1 if readmitted == "<30"
+readmitted_flag = 0 otherwise
 
-### ✔ Final dataset characteristics
-- **269,346 rows**
-- **≈ 60 fully numeric features**
-- **0 missing values**
-- ML-ready format
+### ✔ Final dataset
+- **269,346 rows**  
+- **≈ 60 fully numerical features**  
+- **0 missing values**  
+- **ML-ready tabular dataset**
 
 ---
 
 ## ⚙️ 4. Reproducibility Instructions
 
-### 🐍 Python Version  
+### 🐍 Python version
 Use **Python 3.9+**
 
 ---
 
 ### 📂 4.1 Dataset placement
-Place the cleaned dataset in:
+
+Place the cleaned dataset here:
 project/
 │── data/
 └── diabetes_clean.csv
@@ -94,54 +93,54 @@ pip install -r requirements.txt
 
 ---
 
-### 🚀 4.3 Run the entire ML pipeline
+### 🚀 4.3 Run the full training pipeline
 python main.py
 
-This script:
-- loads the dataset  
-- preprocesses features  
-- trains the optimized Random Forest  
-- evaluates performance  
-- saves the final model to `models/random_forest_best.joblib`
+This script will:
+- Load the dataset  
+- Split into train/test  
+- Train the **optimized Random Forest model**  
+- Evaluate performance  
+- Save the model under:  
+  `models/random_forest_best.joblib`
 
 ---
 
-## 🧪 5. Baseline Model
+## 🧪 5. Baseline Model – Logistic Regression
 
-### Baseline: **Logistic Regression**
+The baseline provides a simple reference point to measure improvements.
 
-**Features:**  
-All cleaned numerical features.
+### How it works  
+Logistic Regression is a **linear probabilistic model** widely used in healthcare.  
+Each feature contributes proportionally to the log-odds of readmission.
 
-**Preprocessing:**  
-- StandardScaler  
-- No dimensionality reduction  
-- No feature selection  
+### Why it’s useful  
+- Easy to train, interpret, and benchmark  
+- Establishes a **performance baseline**  
+- Shows whether raw features already contain predictive signal
 
-**Baseline Metrics (test set):**
-- ROC-AUC: ~0.78  
-- Accuracy: ~0.73  
-
-This baseline serves as the reference for performance improvements.
+Baseline results:  
+- **ROC-AUC ~0.78**, **Accuracy ~0.73**  
+(These scores serve only as reference, no tuning applied.)
 
 ---
 
 ## 🔬 6. Experiment Tracking
 
-A structured, iterative improvement process was followed:
+A structured iterative approach was followed to improve model performance.
 
-| Iteration | Modification | Model | ROC-AUC | Notes |
-|----------|--------------|--------|----------|-------|
-| 1 | Baseline logistic regression | LogReg | ~0.78 | Baseline reference |
-| 2 | Added Decision Tree | DecisionTree | ~0.83 | Captures nonlinearity |
-| 3 | Random Forest (default params) | RF | ~0.94 | Large improvement |
-| 4 | Full feature engineering | RF | ~0.97 | Strong leap from clean data |
-| 5 | Hyperparameter tuning (GridSearchCV) | **RF (optimized)** | **0.9903** | Best model |
-| 6 | XGBoost test | XGB | ~0.985 | Very strong, but below RF |
+| Iteration | Modification | Model | ROC-AUC | Comment |
+|----------|--------------|--------|---------|---------|
+| 1 | Baseline with raw cleaned features | Logistic Regression | ~0.78 | Starting point |
+| 2 | Non-linear modeling | Decision Tree | ~0.83 | Captures interactions |
+| 3 | Ensemble method (default params) | Random Forest | ~0.94 | Strong improvement |
+| 4 | Full feature engineering (ICD9 grouping, encoding, cleaning) | Random Forest | ~0.97 | Major gain due to high-quality data prep |
+| 5 | Hyperparameter tuning (GridSearchCV, CV=5) | **Random Forest (final)** | **0.9903** | Best model |
 
-### 🎯 Best model  
-**Optimized Random Forest**  
-Best hyperparameters (found via GridSearchCV):
+### 🎯 Final Model Used  
+**Optimized Random Forest**
+
+Hyperparameters:
 n_estimators = 300
 max_depth = None
 min_samples_split = 2
@@ -160,34 +159,44 @@ class_weight = "balanced"
 | F1-score | 0.981 |
 | ROC-AUC | 0.998 |
 
-### Why performance is high (and realistic)
-- Very strong signal in ICD-9 codes and hospitalization history  
-- Excellent feature engineering  
-- Dataset size (269k rows) favors ensemble trees  
-- Cross-validated hyperparameter tuning  
-- Fully numerical, clean, noise-free feature matrix  
-
-These scores align with best Kaggle solutions on this dataset.
+### Why such high performance?
+- Clean, fully numerical tabular dataset  
+- Strong predictive features (diagnoses, hospital history, A1C…)  
+- Large sample size (269k rows)  
+- Random Forest excels on tabular data  
+- Cross-validated hyperparameter optimization  
+- No leakage and consistent preprocessing
 
 ---
 
 ## 📁 8. Project Structure
 
 project/
-│── README.md
-│── requirements.txt
-│── eda.ipynb
-│── diabetes_modeling.ipynb
-│── main.py
-│── models/
-│ └── random_forest_best.joblib
-│── data/
-│ └── diabetes_clean.csv
-│ └── diabetic_data.csv
-│ └── IDS_mapping.csv
+├── README.md
+├── requirements.txt
+├── eda.ipynb
+├── diabetes_modeling.ipynb
+├── main.py
+├── app.py  # Streamlit app
+├── models/
+│   └── random_forest_best.joblib
+└── data/
+    └── diabetes_clean.csv
+
 
 ---
 
-## 📬 Contact  
+##  Contact  
 **Bastien Ragueneau**  
-Albert School – Business & Data (2025)
+Bachelor Business & Data – Albert School  
+bragueneau@albertschool.com
+  
+
+
+
+
+
+
+
+
+
