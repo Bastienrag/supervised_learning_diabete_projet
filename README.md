@@ -45,7 +45,7 @@ Extensive cleaning and transformation were required.
 
 ##  3. Data Cleaning & Feature Engineering
 
-### ✔ Cleaning
+###  Cleaning
 - Removal of columns with extreme missingness:  
   `weight`, `payer_code`, `medical_specialty`
 - Removal of ~2% of rows with `race = "?"`  
@@ -169,15 +169,15 @@ class_weight = "balanced"
 
 ##  8. Project Structure
 
-project/
-README.md
-requirements.txt
-eda.ipynb
-diabetes_modeling.ipynb
-main.py
-app.py  # Streamlit app
-models/random_forest_best.joblib
-data/diabetes_clean.csv, diabetic_data, IDS_mapping
+- project/
+- README.md
+- requirements.txt
+- eda.ipynb
+- diabetes_modeling.ipynb
+- main.py
+- app.py  # Streamlit app
+- models/random_forest_best.joblib
+- data/diabetes_clean.csv, diabetic_data, IDS_mapping
 
 
 ---
