@@ -82,9 +82,7 @@ Use **Python 3.9+**
 ###  4.1 Dataset placement
 
 Place the cleaned dataset here:
-project/
-│── data/
-└── diabetes_clean.csv
+project/data/diabetes_clean.csv
 
 ---
 
@@ -172,16 +170,14 @@ class_weight = "balanced"
 ##  8. Project Structure
 
 project/
-├── README.md
-├── requirements.txt
-├── eda.ipynb
-├── diabetes_modeling.ipynb
-├── main.py
-├── app.py  # Streamlit app
-├── models/
-│   └── random_forest_best.joblib
-└── data/
-    └── diabetes_clean.csv
+README.md
+requirements.txt
+eda.ipynb
+diabetes_modeling.ipynb
+main.py
+app.py  # Streamlit app
+models/random_forest_best.joblib
+data/diabetes_clean.csv, diabetic_data, IDS_mapping
 
 
 ---
